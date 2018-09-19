@@ -22,7 +22,8 @@ function draw() {
   miMinuto = minute();
   miHora = hour();
 
-  miHoraModificado = map(miHora, 0, 23, 380, 1);
+  miHoraModificado = map(miHora, 0, 7, 1, 380);
+  miHoraModificado = map(miHora, 7, 23, 380, 1);
 
   //Señal de la red
 
@@ -34,6 +35,37 @@ function draw() {
   ellipse(220, 210, 170, 170);
   ellipse(220, 210, 250, 250);
   ellipse(220, 210, 330, 330);
+  
+  
+  if (miHora > 9 && miHora < 11) {
+
+  noFill();
+  stroke(0);  
+  strokeWeight(21);
+  ellipse(220, 210, 330, 330); 
+
+  }
+  
+  if (miHora > 13 && miHora < 15) {
+
+  noFill();
+  stroke(0);  
+  strokeWeight(21);
+  ellipse(220, 210, 250, 250);
+  ellipse(220, 210, 330, 330);
+
+  }
+  
+  if (miHora > 18 && miHora < 20) {
+
+  noFill();
+  stroke(0);  
+  strokeWeight(21);
+  ellipse(220, 210, 170, 170);
+  ellipse(220, 210, 250, 250);
+  ellipse(220, 210, 330, 330);  
+
+  }
 
   fill(0);
   noStroke();
@@ -41,11 +73,12 @@ function draw() {
   vertex(220, 210);
   vertex(400, 0);
   vertex(400, 250);
-  vertex(40, 250)
+  vertex(40, 250);
   vertex(40, 0);
   endShape();
 
-  //Lineas de senal de comunicacion
+
+  //Lineas de señal de comunicacion
 
   strokeWeight(4);
   fill(255);
