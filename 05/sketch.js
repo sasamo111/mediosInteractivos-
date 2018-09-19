@@ -22,8 +22,7 @@ function draw() {
   miMinuto = minute();
   miHora = hour();
 
-  miHoraModificado = map(miHora, 0, 7, 1, 380);
-  miHoraModificado = map(miHora, 7, 23, 380, 1);
+  miHoraModificado = map(miHora, 0, 23, 380, 1);
 
   //Señal de la red
 
@@ -35,35 +34,35 @@ function draw() {
   ellipse(220, 210, 170, 170);
   ellipse(220, 210, 250, 250);
   ellipse(220, 210, 330, 330);
-  
-  
-  if (miHora > 9 && miHora < 11) {
 
-  noFill();
-  stroke(0);  
-  strokeWeight(21);
-  ellipse(220, 210, 330, 330); 
 
-  }
-  
-  if (miHora > 13 && miHora < 15) {
+  if (miHora >= 9 && miHora <= 11) {
 
-  noFill();
-  stroke(0);  
-  strokeWeight(21);
-  ellipse(220, 210, 250, 250);
-  ellipse(220, 210, 330, 330);
+    noFill();
+    stroke(0);
+    strokeWeight(21);
+    ellipse(220, 210, 330, 330);
 
   }
-  
-  if (miHora > 18 && miHora < 20) {
 
-  noFill();
-  stroke(0);  
-  strokeWeight(21);
-  ellipse(220, 210, 170, 170);
-  ellipse(220, 210, 250, 250);
-  ellipse(220, 210, 330, 330);  
+  if (miHora >= 13 && miHora <= 15) {
+
+    noFill();
+    stroke(0);
+    strokeWeight(21);
+    ellipse(220, 210, 250, 250);
+    ellipse(220, 210, 330, 330);
+
+  }
+
+  if (miHora >= 18 && miHora <= 20) {
+
+    noFill();
+    stroke(0);
+    strokeWeight(21);
+    ellipse(220, 210, 170, 170);
+    ellipse(220, 210, 250, 250);
+    ellipse(220, 210, 330, 330);
 
   }
 
@@ -77,7 +76,6 @@ function draw() {
   vertex(40, 0);
   endShape();
 
-
   //Lineas de señal de comunicacion
 
   strokeWeight(4);
@@ -88,9 +86,37 @@ function draw() {
   rect(390, 110, señ, 112, curv);
   rect(350, 150, señ, 72, curv);
 
+  if (miHora >= 17 && miHora <= 18) {
+
+    strokeWeight(4);
+    fill(0);
+    stroke(0);
+    rect(470, pilY1, señ, 192, curv);
+    rect(430, 70, señ, 152, curv);
+
+  }
+
+  if (miHora >= 20 && miHora <= 22) {
+
+    strokeWeight(4);
+    fill(0);
+    stroke(0);
+    rect(470, pilY1, señ, 192, curv);
+  }
+
+  if (miHora >= 5 && miHora <= 6) {
+
+    strokeWeight(4);
+    fill(0);
+    stroke(0);
+    rect(470, pilY1, señ, 192, curv);
+    rect(430, 70, señ, 152, curv);
+    rect(390, 110, señ, 112, curv);
+  }
 
   //Bateria del celular
 
+  stroke(255);
   noFill();
   quad(pilX1, pilY1, pilX2, pilY1, pilX2, pilY2, pilX1, pilY2);
   fill(255);
