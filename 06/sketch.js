@@ -154,7 +154,7 @@ function draw() {
     }
     if (tiempoC > (5)) {
 
-      //Nave 
+      //movimiento Nave 
 
       noTint();
       image(nave, naveX, 230, 200, 100);
@@ -198,6 +198,8 @@ function draw() {
 
   if (tiempoC > 20 && tiempoC < 170){
   if (mouseIsPressed ) {
+    
+    //Efecto de volumen y paneo
     
     if (tiempoC > 20 && tiempoC < 120){
 
@@ -255,6 +257,8 @@ function draw() {
     imageMode(CENTER);
     image(nave, mouseX, mouseY, 150, 75);
     
+    //Efecto de volumen y paneo
+    
     if (tiempoC > 120 && tiempoC < 170){
     
       var vol = map(height - mouseX, height, 0, 0, 1);
@@ -291,6 +295,7 @@ function draw() {
     text("WARNING", texX, 250);
     texX = texX - 1
   }
+  
   //Rocas espaciles Verticales
 
   imageMode(LEFT);
