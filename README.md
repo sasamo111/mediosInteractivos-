@@ -7,3 +7,4 @@ Indice de los ejercicios de la clase de Santiago Salazar
 5. [Reloj mi tiempo](https://sasamo111.github.io/mediosInteractivos-/05)
 6. [Cancion interactiva](https://sasamo111.github.io/mediosInteractivos-/06)
 7. [Interaccion](https://sasamo111.github.io/mediosInteractivos-/07)
+8. [Interaccion Nueva](https://sasamo111.github.io/mediosInteractivos-/08)
