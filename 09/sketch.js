@@ -10,17 +10,18 @@ var analizador;
 var nave;
 var titulo;
 var rocas = [];
-var tituloX = 500
-var naveX = 500;
+var tituloX = 0;
+var naveX = 0;
 var naveY = 230;
 var navTamX = 200;
 var navTamY = 100;
 var posX;
 var posY;
-var texX = 600;
+var texX = 300;
 
 
 function preload() {
+  
   musica = loadSound('Assets/1.mp3');
   nave = loadImage('Assets/Nave.png');
   titulo = loadImage('Assets/titulo.png');
@@ -29,25 +30,28 @@ function preload() {
 }
 
 function setup() {
-  
+
   //crea un canvas del tamano de la ventana
-  
+
   createCanvas(windowWidth, windowHeight);
-  
+
   tituloX = width + 200
+  naveX = width + 200
 
   analizador = new p5.Amplitude();
   analizador.setInput(musica);
 
-  musica.play();
+  musica.loop();
   musica.rate(1);
+   
+  score = second();
 
 
   //pintar las rocas lunares.
 
-  for (var i = 0; i < 30; i = i + 1) {
+  for (var i = 0; i < 8; i = i + 1) {
     var tempX = random(0, width);
-    var tempY = random(0, height);
+    var tempY = random(-1000, -10);
 
     rocas[i] = new meto(tempX, tempY, 1);
   }
@@ -56,7 +60,7 @@ function setup() {
 function draw() {
   background(0);
 
-  
+
   dur = musica.duration();
   tiempoC = musica.currentTime();
 
@@ -74,122 +78,47 @@ function draw() {
     point(posX, posY);
   }
 
-  // Estado 0: Presenatcion
-  
+  // Estado 0: Presentación
+
   if (estado == 0) {
 
     //titulo "Spaceship"
     noTint();
-    image(titulo, tituloX, windowHeight / 2 - 200, 400, 90);
+    image(titulo, tituloX, height / 2 - 200, 400, 90);
 
     tituloX = tituloX - 1.5
-    if (tituloX <= windowWidth / 2) {
-      tituloX = windowWidth / 2;
+    if (tituloX <= width / 2) {
+      tituloX = width / 2;
     }
 
+    if (frameCount > 450 && frameCount < 10000){
+      
+    //titulo "Toca para jugar"
+
+      strokeWeight(1);
+      fill(255);
+      textSize(30);
+      textFont('Audiowide');
+      textAlign(CENTER);
+      text("Toca para jugar", width/2, height/2 + 200);
+  
+    }
+    
     //movimiento Nave 
 
     noTint();
-    image(nave, naveX, windowHeight/2, 300, 150);
+    image(nave, naveX, height / 2, 300, 150);
     naveX = naveX - 1.5;
 
-        if (naveX <= windowWidth / 2) {
-      naveX = windowWidth / 2;
+    if (naveX <= width / 2) {
+      naveX = width / 2;
     }
   }
 
-  // Estado 1
+  // Estado 1: Jugar
   
-  if (estado == 1) {
-
-    if (tiempoC > 20 && tiempoC < 170) {
-
-      //dibuja las rocas lunares
-
-      for (var i = 0; i < rocas.length; i = i + 1) {
-        rocas[i].dibujarse();
-        rocas[i].moverseY();
-        
-        rocas[i].y = random(-50, -10);
-        rocas[i].x = random(0, windowWidth);
-        
-        if(rocas[i].y >= windowHeight + 50){
-        
-        rocas[i].y = random(-50, -10);
-        rocas[i].x = random(0, windowWidth)  
-        
-        
-        }
-
-      }
-    }
-
-  }
-
-  if (tiempoC > 15 && tiempoC < 24) {
-
-    noTint();
-    image(nave, naveX, naveY, navTamX, navTamY);
-    naveY = naveY + 1
-    navTamX = navTamX - 0.4
-    navTamY = navTamY - 0.2
-
-    if (naveY >= 390) {
-      naveY = 390;
-    }
-    if (naveX >= 250) {
-      naveX = 250;
-    }
-    if (navTamX <= 150) {
-      navTamX = 150;
-    }
-    if (navTamY <= 75) {
-      navTamY = 75;
-    }
-
-
-    //titulo Spaceship moviendose
-
-
-    noTint();
-    image(titulo, tituloX, 120, 260, 60);
-    tituloX = tituloX - 1.5
-  }
-
-  if (tiempoC > 20 && tiempoC < 170) {
-    if (mouseIsPressed) {
-
-      //Efecto de volumen y paneo
-
-      if (tiempoC > 20 && tiempoC < 120) {
-
-
-        var vol = map(height - mouseY, height, 0, 0, 1);
-        musica.setVolume(vol);
-
-        var paneo = map(mouseX, 0, width, -1, 1);
-        musica.pan(paneo);
-      }
-
-      //Fondo Negro
-
-      noStroke();
-      fill(0);
-      rect(0, 0, width, height);
-
-      //estrellas
-
-      for (var i = 0; i < 10; i = i + 3) {
-        var posX = random(0, width);
-        var posY = random(0, height);
-
-        stroke(255);
-        strokeWeight(10);
-        point(posX, posY);
-      }
-      stroke(0);
-      point(250, 250);
-
+    else if (estado == 1) {
+      
       //Destellos de luz
 
       if (tiempoC > 91.2 && tiempoC < 170) {
@@ -210,53 +139,67 @@ function draw() {
 
         }
       }
-
-      //Nave para controlar 
+      
+      //musica.jump()
+    
+    //Nave para controlar 
 
       noTint();
       imageMode(CENTER);
       image(nave, mouseX, mouseY, 150, 75);
-
-      //Efecto de volumen y paneo
-
-      if (tiempoC > 120 && tiempoC < 170) {
-
-        var vol = map(height - mouseX, height, 0, 0, 1);
+    
+    //Efecto de volumen y paneo
+    
+        var vol = map(height - mouseY, height, 0, 0, 1);
         musica.setVolume(vol);
 
-        var paneo = map(mouseY, 0, width, -1, 1);
+        var paneo = map(mouseX, 0, width, -1, 1);
         musica.pan(paneo);
+        
+        textFont('Audiowide');
+        strokeWeight(1);
+        fill(255);
+        textAlign(CENTER);
+        textSize(30);
+        text("Score:", 65, 50);
+        textAlign(LEFT);
+    		text((second() + score), 123, 50);
+    
+      //dibuja las rocas lunares
 
-      }
+      for (var i = 0; i < rocas.length; i = i + 1) {
+        rocas[i].dibujarse();
+        rocas[i].moverseY();
+
+        if (rocas[i].y >= height + 50) {
+
+          rocas[i].y = random(-50, -10);
+          rocas[i].x = random(0, width)
+        } 
+        
+        if (dist(rocas[i].x, rocas[i].y, mouseX, mouseY) < 30) {
+        estado = 3;
     }
+  }
+  } 
+  
+  //Perdiste
+  
+  else if (estado == 3) {
+    
+    //titulo "GAME OVER"
 
-    if (tiempoC > 100 && tiempoC < 110) {
-
-      //titulo WARNING
-
+      strokeWeight(1);
       fill(255);
       textSize(50);
+      textFont('Audiowide');
       textAlign(CENTER);
-      text("WARNING", texX, 250);
-      texX = texX - 1
-      if (texX <= 250) {
-        texX = 250
-      }
-    }
-  }
-
-  if (tiempoC > 110 && tiempoC < 120) {
-
-    //titulo WARNING
-
-    fill(255);
-    textSize(50);
-    textAlign(CENTER);
-    text("WARNING", texX, 250);
-    texX = texX - 1
+      text("GAME OVER", width/2, height/2);
+      textSize(30);
+      text("Toca otra vez", width/2, height/2 + 100);
+      musica.stop()
   }
 }
-
 
 
 function nav(mouseX, mouseY) {
@@ -283,14 +226,14 @@ function meto(rocaX, rocaY) {
 
   this.dibujarse = function() {
 
-    imageMode(LEFT);
-    image(roca, rocaX, rocaY, 50, 50);
+    imageMode(CENTER);
+    image(roca, this.x, this.y, 50, 50);
 
   }
 
   this.moverseY = function() {
 
-    this.y = this.y + random(1, 5);
+    this.y = this.y + random(4, 9);
 
   }
 
@@ -302,12 +245,38 @@ function meto(rocaX, rocaY) {
 
 }
 
-function mouseDragged(){
-//prevent default
+//esta funcion se activa cuando el dispositivo reconoce que se movio un toque en la pantalla
+function touchMoved() {
   
+   for (var i2 = 0; i2 < touches.length; i2++) {
+
+    //revisa si se estaba tocando la bola
+    //se usa touches[0] porque se asume que solo hay un toque a la vez
+    if (dist(touches[i2].x, touches[i2].y, x, y) < tam/2) {
+
+      //actualiza la posicion de la elipse con la posicion del toque
+      x = touches[i2].x;
+      y = touches[i2].y;
+    }
+   }
+  return false;
+}
+
+function mouseReleased() {
+  if (estado == 0) {
+    estado = 1;
+  }
+    if (estado == 3) {
+    estado = 1;
+  }
+
+}
+
+function mouseDragged() {
+  //prevent default
+
   return false;
 
-  
 }
 
 function touchMoved() {
@@ -318,7 +287,7 @@ function touchMoved() {
 
 function mouseWheel(event) {
   //move the square according to the vertical scroll amount
-  
+
   //uncomment to block page scrolling
   return false;
 }
