@@ -191,7 +191,7 @@ function draw() {
       rocas[i].dibujarse();
       rocas[i].moverseY();
       
-      if(score % 20 == 0 && score >= 20){
+      if(score % 100 == 0 && score >= 100){
     
     rocas[i].vel = rocas[i].vel + 0.2
     //rocas.push(new meto());
