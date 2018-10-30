@@ -191,9 +191,10 @@ function draw() {
       rocas[i].dibujarse();
       rocas[i].moverseY();
       
-      if(score % 150 == 0 && score >= 150){
+      if(score % 20 == 0 && score >= 20){
     
-    rocas[i].vel = rocas[i].vel + 0.1
+    rocas[i].vel = rocas[i].vel + 0.2
+    //rocas.push(new meto());
       
     } 
 
@@ -269,6 +270,7 @@ function draw() {
     for (var i = 0; i < rocas.length; i = i + 1) {
       rocas[i].y = random(-500, -50);
       rocas[i].x = random(0, width);
+      rocas[i].vel = random(6,7);
     }
     for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1)  {
      
