@@ -247,15 +247,7 @@ function draw() {
     textSize(30);
     text("Reintentar", width / 2, height / 2 + 200);
     
-    if (mouseIsPressed) {
 
-    
-  if (mouseX > width/2 - posXbot1 && mouseX < width/2 -  posXbot1 + tamBot1 &&
-    mouseY > height/2 + posYbot1 && mouseY < height/2 + posYbot1 + tamBot2) {
-   estado = 1;
-   score = 0;
-  }
-    }
     stroke(255);
     noFill();
     rect(width/2 - posXbot1, height/2 + posYbot1, tamBot1, tamBot2);
@@ -365,11 +357,17 @@ function mouseReleased() {
   
   if (estado == 0) {
     estado = 1;
-  } //else if (estado == 3) {
-    //estado = 1;
-    //musica.playMode('restart');
-    //musica.play();
+  } else if (estado == 3) {
+    if (mouseX > width/2 - posXbot1 && mouseX < width/2 -  posXbot1 + tamBot1 &&
+    mouseY > height/2 + posYbot1 && mouseY < height/2 + posYbot1 + tamBot2) {
+   
+   estado = 1;
+   score = 0;
+   musica.playMode('restart');
+   musica.play();
+  }
   
+}
 }
 
 function mouseDragged() {
