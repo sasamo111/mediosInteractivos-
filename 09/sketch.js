@@ -1,10 +1,11 @@
 // Estado 0 = Introducción
 // Estado 1 = Juego
 // Estado 2 = Perdio
-
+var q = 1
+var colores;
 var posXbot1 = 100;
 var posYbot1 = 170;
-var tamBot1 = 200;
+var tamBot1 = 198;
 var tamBot2 = 40;
 var estado = 0;
 var fuente;
@@ -18,8 +19,8 @@ var bonus = [];
 var tituloX = 0;
 var naveX = 0;
 var naveY = 230;
-var navTamX = 200;
-var navTamY = 100;
+var navTamX = 150;
+var navTamY = 75;
 var posX;
 var posY;
 var texX = 300;
@@ -28,6 +29,7 @@ var texX = 300;
 function preload() {
 
   musica = loadSound('Assets/1.mp3');
+  cancion = loadSound('Assets/2.mp3');
   evil = loadSound('Assets/evil.mp3');
   nave = loadImage('Assets/Nave.png');
   logo = loadImage('Assets/logo.png');
@@ -133,6 +135,10 @@ function draw() {
 
   // Estado 1: Jugar
   else if (estado == 1) {
+    
+    rojo = random(0,255);
+    verde = random(0,255);
+    azul = random(0,255);
   
     //Destellos de luz
 
@@ -143,7 +149,7 @@ function draw() {
         var posY = random(0, height);
 
         noStroke();
-        fill(255);
+        fill(rojo, verde, azul);
         ellipse(posX, posY, nivel * 650, nivel * 650);
         ellipse(posX, posY, nivel * 350, nivel * 350);
         fill(255, 255, 255, 150);
@@ -159,7 +165,7 @@ function draw() {
 
     noTint();
     imageMode(CENTER);
-    image(nave, mouseX, mouseY, 150, 75);
+    image(nave, mouseX, mouseY, navTamX, navTamY);
 
     //Efecto de volumen y paneo
 
@@ -179,10 +185,17 @@ function draw() {
     text((score), 123, 50);
 
     //dibuja las rocas lunares
+  
 
     for (var i = 0; i < rocas.length; i = i + 1) {
       rocas[i].dibujarse();
       rocas[i].moverseY();
+      
+      if(score % 150 == 0 && score >= 150){
+    
+    rocas[i].vel = rocas[i].vel + 0.1
+      
+    } 
 
       if (rocas[i].y >= height + 50) {
 
@@ -192,7 +205,7 @@ function draw() {
         score = score + 1
       }
 
-      if (dist(rocas[i].x, rocas[i].y, mouseX, mouseY) < 30) {
+      if (dist(rocas[i].x, rocas[i].y, mouseX, mouseY) < 50) {
         estado = 3;
       }
     }
@@ -211,7 +224,7 @@ function draw() {
 
       if (dist(bonus[i2].x2, bonus[i2].y2, mouseX, mouseY) < 50) {
 
-        score = score + 50;
+        score = score + 30;
 
         bonus[i2].y2 = random(-1000, -900);
         bonus[i2].x2 = random(0, width)
@@ -248,6 +261,7 @@ function draw() {
     text("Reintentar", width / 2, height / 2 + 200);
     
 
+    strokeWeight(3);
     stroke(255);
     noFill();
     rect(width/2 - posXbot1, height/2 + posYbot1, tamBot1, tamBot2);
@@ -285,6 +299,7 @@ function meto(rocaX, rocaY) {
 
   this.x = rocaX
   this.y = rocaY
+  this.vel = random(6,7);
 
 
   this.dibujarse = function() {
@@ -296,13 +311,13 @@ function meto(rocaX, rocaY) {
 
   this.moverseY = function() {
 
-    this.y = this.y + random(8, 9);
+    this.y = this.y + this.vel;
 
   }
 
   this.moverseX = function() {
 
-    this.x = this.x + random(4, 9);
+    this.x = this.x + this.vel;
 
   }
 
