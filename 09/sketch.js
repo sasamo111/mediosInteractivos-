@@ -2,10 +2,10 @@
 // Estado 1 = Juego
 // Estado 2 = Perdio
 
-var posXbot1 = 50;
-var posYbot1 = 175;
-var tamBot1 = 0;
-var tamBot2 = 0;
+var posXbot1 = 100;
+var posYbot1 = 170;
+var tamBot1 = 200;
+var tamBot2 = 40;
 var estado = 0;
 var fuente;
 var musica;
@@ -133,7 +133,7 @@ function draw() {
 
   // Estado 1: Jugar
   else if (estado == 1) {
-
+  
     //Destellos de luz
 
     if (tiempoC > 91.2 && tiempoC < 170) {
@@ -211,7 +211,7 @@ function draw() {
 
       if (dist(bonus[i2].x2, bonus[i2].y2, mouseX, mouseY) < 50) {
 
-        score = score + 20;
+        score = score + 50;
 
         bonus[i2].y2 = random(-1000, -900);
         bonus[i2].x2 = random(0, width)
@@ -247,9 +247,18 @@ function draw() {
     textSize(30);
     text("Reintentar", width / 2, height / 2 + 200);
     
+    if (mouseIsPressed) {
+
+    
+  if (mouseX > width/2 - posXbot1 && mouseX < width/2 -  posXbot1 + tamBot1 &&
+    mouseY > height/2 + posYbot1 && mouseY < height/2 + posYbot1 + tamBot2) {
+   estado = 1;
+   score = 0;
+  }
+    }
     stroke(255);
     noFill();
-    rect(posXbot1, posYbot1, tamBot1, tamBot2);
+    rect(width/2 - posXbot1, height/2 + posYbot1, tamBot1, tamBot2);
 
     for (var i = 0; i < rocas.length; i = i + 1) {
       rocas[i].y = random(-500, -50);
@@ -356,12 +365,11 @@ function mouseReleased() {
   
   if (estado == 0) {
     estado = 1;
-  } else if (estado == 3) {
-    estado = 1;
-    musica.playMode('restart');
-    musica.play();
-    score = 0
-  }
+  } //else if (estado == 3) {
+    //estado = 1;
+    //musica.playMode('restart');
+    //musica.play();
+  
 }
 
 function mouseDragged() {
