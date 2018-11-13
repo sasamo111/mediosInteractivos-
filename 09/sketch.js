@@ -1,7 +1,8 @@
 // Estado 0 = Introducción
-// Estado 1 = Juego
+// Estado 1 = nivel 1
 // Estado 2 = Perdio
-var q = 1
+// Estado 3 = Nivel 2
+var numRocas = 10
 var colores;
 var posXbot1 = 100;
 var posYbot1 = 170;
@@ -58,11 +59,12 @@ function setup() {
 
   //pintar las rocas lunares.
 
-  for (var i = 0; i < 10; i = i + 1) {
+  for (var i = 0; i < numRocas; i = i + 1) {
     var tempX = random(0, width);
     var tempY = random(-1000, -10);
 
     rocas[i] = new meto(tempX, tempY, 1);
+    
   }
 
   //Bonus
@@ -136,10 +138,11 @@ function draw() {
   // Estado 1: Jugar
   else if (estado == 1) {
     
-    rojo = random(0,255);
-    verde = random(0,255);
-    azul = random(0,255);
-  
+
+    rojo = random(0, 255);
+    verde = random(0, 255);
+    azul = random(0, 255);
+
     //Destellos de luz
 
     if (tiempoC > 91.2 && tiempoC < 170) {
@@ -150,13 +153,13 @@ function draw() {
 
         noStroke();
         fill(rojo, verde, azul);
-        ellipse(posX, posY, nivel * 650, nivel * 650);
-        ellipse(posX, posY, nivel * 350, nivel * 350);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
         fill(255, 255, 255, 150);
-        ellipse(posX, posY, nivel * 650, nivel * 650);
-        ellipse(posX, posY, nivel * 350, nivel * 350);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
         fill(255, 255, 255, 100);
-        ellipse(posX, posY, nivel * 250, nivel * 250);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
 
       }
     }
@@ -183,20 +186,24 @@ function draw() {
     text("Score:", 65, 50);
     textAlign(LEFT);
     text((score), 123, 50);
+    textSize(20);
+    text("Objetivo: 250", 35, 83);
+   
 
     //dibuja las rocas lunares
-  
 
-    for (var i = 0; i < rocas.length; i = i + 1) {
+    for (var i = 0; i < rocas.length ; i = i + 1) {
       rocas[i].dibujarse();
       rocas[i].moverseY();
-      
-      if(score % 100 == 0 && score >= 100){
-    
-    rocas[i].vel = rocas[i].vel + 0.2
-    //rocas.push(new meto());
-      
-    } 
+
+      if (score % 150== 0 && score >= 150) {
+
+        rocas[i].vel = rocas[i].vel + 0.1
+        numRocas = numRocas + 1;
+        score = score + 1
+        rocas.push(new meto(random(0, width), random(-300, -50), 1));
+
+      }
 
       if (rocas[i].y >= height + 50) {
 
@@ -210,9 +217,9 @@ function draw() {
         estado = 3;
       }
     }
-    
+
     //dibuja los bonus
-    
+
     for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
       bonus[i2].dibujarse();
       bonus[i2].moverseY();
@@ -232,20 +239,476 @@ function draw() {
 
       }
     }
+    
+    if (score >= 250){
+    estado = 2
+    
+   }
   }
-
-  //Perdiste
+    
   
-  else if (estado == 3) {
-    
-    //musica.pause();
-    
+  else if (estado == 2){
+  
     textFont('Audiowide');
     strokeWeight(1);
     fill(255);
     textAlign(CENTER);
     textSize(30);
-    text("Score:",width / 2 - 25 , height / 2 + 50 );
+    text("Score:", width / 2 - 25, height / 2 + 50);
+    textAlign(LEFT);
+    text((score), width / 2 + 35, height / 2 + 50);
+
+
+    //titulo "WIN"
+
+    strokeWeight(1);
+    fill(255);
+    textSize(80);
+    textFont('Audiowide');
+    textAlign(CENTER);
+    text("WIN", width / 2, height / 2 - 200);
+    textSize(30);
+    text("Nivel 2", width / 2, height / 2 + 200);
+    
+    strokeWeight(3);
+    stroke(255);
+    noFill();
+    rect(width / 2 - posXbot1, height / 2 + posYbot1, tamBot1, tamBot2);
+    
+     for (var i = 0; i < rocas.length; i = i + 1) {
+      rocas[i].y = random(0, height);
+      rocas[i].x = random(-500, -50);
+      rocas[i].vel = random(4, 6);
+    }
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+
+      bonus[i2].y2 = random(0, height);
+      bonus[i2].x2 = random(-1000, -900)
+    }
+  }
+  
+  
+  // Estado 4: Nivel 2
+  else if (estado == 4) {
+
+    rojo = random(0, 255);
+    verde = random(0, 255);
+    azul = random(0, 255);
+
+    //Destellos de luz
+
+    if (tiempoC > 91.2 && tiempoC < 170) {
+      var nivel = analizador.getLevel();
+      
+      for (var i = 0; i < 5; i = i + 3) {
+        var posX = random(0, width);
+        var posY = random(0, height);
+
+        noStroke();
+        fill(rojo, verde, azul);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 150);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 100);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+
+      }
+    }
+
+    //Nave para controlar 
+
+    noTint();
+    imageMode(CENTER);
+    image(nave, mouseX, mouseY, navTamX, navTamY);
+
+    //Efecto de volumen y paneo
+
+    var vol = map(height - mouseX, height, 0, 0, 1);
+    musica.setVolume(vol);
+
+    var paneo = map(mouseY, 0, width, -1, 1);
+    musica.pan(paneo);
+
+   
+    textFont('Audiowide');
+    strokeWeight(1);
+    fill(255);
+    textAlign(CENTER);
+    textSize(30);
+    text("Score:", 65, 50);
+    textAlign(LEFT);
+    text((score), 123, 50);
+    textSize(20);
+    text("Objetivo: 500", 35, 83);
+
+    //dibuja las rocas lunares
+
+    for (var i = 0; i < rocas.length ; i = i + 1) {
+      rocas[i].dibujarse();
+      rocas[i].moverseX();
+
+      if (score % 150 == 0 && score >= 150) {
+
+        rocas[i].vel = rocas[i].vel + 0.1
+        numRocas = numRocas + 1;
+        score = score + 1
+        rocas.push(new meto(random(-300, -50), random(0, height), 1));
+
+      }
+
+      if (rocas[i].x >= width + 50) {
+
+        rocas[i].y = random(0, height);
+        rocas[i].x = random(-300, -50);
+
+        score = score + 1
+      }
+
+      if (dist(rocas[i].x, rocas[i].y, mouseX, mouseY) < 50) {
+        estado = 3;
+      }
+    }
+
+    //dibuja los bonus
+
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+      bonus[i2].dibujarse();
+      bonus[i2].moverseX();
+
+      if (bonus[i2].y2 >= width + 50) {
+
+        bonus[i2].y2 = random(0, height);
+        bonus[i2].x2 = random(-1000, -900)
+      }
+
+      if (dist(bonus[i2].x2, bonus[i2].y2, mouseX, mouseY) < 50) {
+
+        score = score + 30;
+
+        bonus[i2].y2 = random(0, height);
+        bonus[i2].x2 = random(-1000, -900)
+
+      }
+    }
+    
+    if (score >= 500){
+    estado = 5
+    
+   }
+
+  }
+  
+  else if (estado == 5){
+  
+    textFont('Audiowide');
+    strokeWeight(1);
+    fill(255);
+    textAlign(CENTER);
+    textSize(30);
+    text("Score:", width / 2 - 25, height / 2 + 50);
+    textAlign(LEFT);
+    text((score), width / 2 + 35, height / 2 + 50);
+
+
+    //titulo "WIN"
+
+    strokeWeight(1);
+    fill(255);
+    textSize(80);
+    textFont('Audiowide');
+    textAlign(CENTER);
+    text("WIN", width / 2, height / 2 - 200);
+    textSize(30);
+    text("Nivel 3", width / 2, height / 2 + 200);
+    
+    strokeWeight(3);
+    stroke(255);
+    noFill();
+    rect(width / 2 - posXbot1, height / 2 + posYbot1, tamBot1, tamBot2);
+    
+     for (var i = 0; i < rocas.length; i = i + 1) {
+      rocas[i].y = random(0, height);
+      rocas[i].x = random(width + 500, width  + 50);
+      rocas[i].vel = random(4, 6);
+    }
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+
+      bonus[i2].y2 = random(0, height);
+      bonus[i2].x2 = random(width + 1000, width  + 900)
+    }
+  }
+  
+  // Estado 6: Nivel 3
+  else if (estado == 6) {
+
+    rojo = random(0, 255);
+    verde = random(0, 255);
+    azul = random(0, 255);
+
+    //Destellos de luz
+
+    if (tiempoC > 91.2 && tiempoC < 170) {
+      var nivel = analizador.getLevel();
+      
+      for (var i = 0; i < 5; i = i + 3) {
+        var posX = random(0, width);
+        var posY = random(0, height);
+
+        noStroke();
+        fill(rojo, verde, azul);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 150);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 100);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+
+      }
+    }
+
+    //Nave para controlar 
+
+    noTint();
+    imageMode(CENTER);
+    image(nave, mouseX, mouseY, navTamX, navTamY);
+
+    //Efecto de volumen y paneo
+
+    var vol = map(height - mouseX, height, 0, 0, 1);
+    musica.setVolume(vol);
+
+    var paneo = map(mouseY, 0, width, -1, 1);
+    musica.pan(paneo);
+
+    textFont('Audiowide');
+    strokeWeight(1);
+    fill(255);
+    textAlign(CENTER);
+    textSize(30);
+    text("Score:", 65, 50);
+    textAlign(LEFT);
+    text((score), 123, 50);
+    textSize(20);
+    text("Objetivo: 800", 35, 83);
+
+    //dibuja las rocas lunares
+
+    for (var i = 0; i < rocas.length ; i = i + 1) {
+      rocas[i].dibujarse();
+      rocas[i].moverseX2();
+
+      if (score % 150 == 0 && score >= 150) {
+
+        rocas[i].vel = rocas[i].vel + 0.1
+        numRocas = numRocas + 1;
+        score = score + 1
+        rocas.push(new meto(random(width + 300, height + 50), random(0, height), 1));
+
+      }
+
+      if (rocas[i].x <= - 50) {
+
+        rocas[i].y = random(0, height);
+        rocas[i].x = random(width + 300, width + 50);
+
+        score = score + 1
+      }
+
+      if (dist(rocas[i].x, rocas[i].y, mouseX, mouseY) < 50) {
+        estado = 3;
+      }
+    }
+
+    //dibuja los bonus
+
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+      bonus[i2].dibujarse();
+      bonus[i2].moverseX2();
+
+      if (bonus[i2].y2 >= width + 50) {
+
+        bonus[i2].y2 = random(0, height);
+        bonus[i2].x2 = random(width + 1000, width + 900)
+      }
+
+      if (dist(bonus[i2].x2, bonus[i2].y2, mouseX, mouseY) < 50) {
+
+        score = score + 30;
+
+        bonus[i2].y2 = random(0, height);
+        bonus[i2].x2 = random(width + 1000, width + 900)
+
+      }
+    }
+    
+    if (score >= 800){
+    
+    estado = 7
+      
+    }
+    
+  }
+  
+  else if (estado == 7){
+  
+    textFont('Audiowide');
+    strokeWeight(1);
+    fill(255);
+    textAlign(CENTER);
+    textSize(30);
+    text("Score:", width / 2 - 25, height / 2 + 50);
+    textAlign(LEFT);
+    text((score), width / 2 + 35, height / 2 + 50);
+
+
+    //titulo "WIN"
+
+    strokeWeight(1);
+    fill(255);
+    textSize(80);
+    textFont('Audiowide');
+    textAlign(CENTER);
+    text("WIN", width / 2, height / 2 - 200);
+    textSize(30);
+    text("Nivel 4", width / 2, height / 2 + 200);
+    
+    strokeWeight(3);
+    stroke(255);
+    noFill();
+    rect(width / 2 - posXbot1, height / 2 + posYbot1, tamBot1, tamBot2);
+    
+     for (var i = 0; i < rocas.length; i = i + 1) {
+      rocas[i].y = random(0, height);
+      rocas[i].x = random(width + 500, width  + 50);
+      rocas[i].vel = random(4, 6);
+    }
+    
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+
+      bonus[i2].y2 = random(0, height);
+      bonus[i2].x2 = random(width + 1000, width + 900)
+    }
+  }
+  
+   // Estado 8: Nivel 4
+  else if (estado == 8) {
+
+    rojo = random(0, 255);
+    verde = random(0, 255);
+    azul = random(0, 255);
+
+    //Destellos de luz
+
+    if (tiempoC > 91.2 && tiempoC < 170) {
+      var nivel = analizador.getLevel();
+      for (var i = 0; i < 5; i = i + 3) {
+        var posX = random(0, width);
+        var posY = random(0, height);
+
+        noStroke();
+        fill(rojo, verde, azul);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 150);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 100);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+
+      }
+    }
+
+    //Nave para controlar 
+
+    noTint();
+    imageMode(CENTER);
+    image(nave, mouseX, mouseY, navTamX, navTamY);
+
+    //Efecto de volumen y paneo
+
+    var vol = map(height - mouseY, height, 0, 0, 1);
+    musica.setVolume(vol);
+
+    var paneo = map(mouseX, 0, width, -1, 1);
+    musica.pan(paneo);
+
+    textFont('Audiowide');
+    strokeWeight(1);
+    fill(255);
+    textAlign(CENTER);
+    textSize(30);
+    text("Score:", 65, 50);
+    textAlign(LEFT);
+    text((score), 123, 50);
+    textSize(20);
+    text("Objetivo: Infinito", 35, 83);
+
+    //dibuja las rocas lunares
+
+    for (var i = 0; i < rocas.length ; i = i + 1) {
+      rocas[i].dibujarse();
+      rocas[i].moverseY2();
+
+      if (score % 150== 0 && score >= 150) {
+
+        rocas[i].vel = rocas[i].vel + 0.1
+        numRocas = numRocas + 1;
+        score = score + 1
+        rocas.push(new meto(random(0, width),random(width + 300, height + 50), 1));
+
+      }
+
+      if (rocas[i].y <=  - 50) {
+
+        rocas[i].y = random(height + 300, height + 50);
+        rocas[i].x = random(0, width);
+
+        score = score + 1
+      }
+
+      if (dist(rocas[i].x, rocas[i].y, mouseX, mouseY) < 50) {
+        estado = 3;
+      }
+    }
+
+    //dibuja los bonus
+
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+      bonus[i2].dibujarse();
+      bonus[i2].moverseY2();
+
+      if (bonus[i2].y2 <= - 50) {
+
+        bonus[i2].y2 = random(height + 1000, height + 900);
+        bonus[i2].x2 = random(0, width)
+      }
+
+      if (dist(bonus[i2].x2, bonus[i2].y2, mouseX, mouseY) < 50) {
+
+        score = score + 30;
+
+        bonus[i2].y2 = random(height + 1000, height + 900);
+        bonus[i2].x2 = random(0, width)
+
+      }
+    }
+  
+  }
+
+  //Perdiste
+  else if (estado == 3) {
+
+    //musica.pause();
+
+    textFont('Audiowide');
+    strokeWeight(1);
+    fill(255);
+    textAlign(CENTER);
+    textSize(30);
+    text("Score:", width / 2 - 25, height / 2 + 50);
     textAlign(LEFT);
     text((score), width / 2 + 35, height / 2 + 50);
 
@@ -260,22 +723,22 @@ function draw() {
     text("GAME OVER", width / 2, height / 2 - 200);
     textSize(30);
     text("Reintentar", width / 2, height / 2 + 200);
-    
+
 
     strokeWeight(3);
     stroke(255);
     noFill();
-    rect(width/2 - posXbot1, height/2 + posYbot1, tamBot1, tamBot2);
+    rect(width / 2 - posXbot1, height / 2 + posYbot1, tamBot1, tamBot2);
 
     for (var i = 0; i < rocas.length; i = i + 1) {
       rocas[i].y = random(-500, -50);
       rocas[i].x = random(0, width);
-      rocas[i].vel = random(6,7);
+      rocas[i].vel = random(4, 6);
     }
-    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1)  {
-     
-     bonus[i2].y2 = random(-1000, -900);
-     bonus[i2].x2 = random(0, width) 
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+
+      bonus[i2].y2 = random(-1000, -900);
+      bonus[i2].x2 = random(0, width)
     }
   }
 }
@@ -301,7 +764,11 @@ function meto(rocaX, rocaY) {
 
   this.x = rocaX
   this.y = rocaY
-  this.vel = random(6,7);
+  this.vel = random(4, 6);
+  this.vel2 = random(6, 8);
+  this.vel3 = random(7, 9);
+  this.vel4 = random(8, 10);
+  this.move = true
 
 
   this.dibujarse = function() {
@@ -314,15 +781,27 @@ function meto(rocaX, rocaY) {
   this.moverseY = function() {
 
     this.y = this.y + this.vel;
+  }
 
+  this.moverseY2 = function() {
+
+    this.y = this.y - this.vel4;
   }
 
   this.moverseX = function() {
 
-    this.x = this.x + this.vel;
+
+    this.x = this.x + this.vel2;
 
   }
+  
+  this.moverseX2 = function() {
 
+
+    this.x = this.x - this.vel3;
+
+  }
+  
 }
 
 
@@ -352,6 +831,40 @@ function bon(bonusX, bonusY) {
 
     }
   }
+  
+  this.moverseY2 = function() {
+
+    this.y2 = this.y2 - random(1, 2);
+
+    if (this.y2 <= height / 2 + 200) {
+
+      this.y2 = this.y2 - random(9, 10)
+
+    }
+  }
+  
+  this.moverseX = function() {
+
+    this.x2 = this.x2 + random(1, 2);
+
+    if (this.x2 >= width / 2 - 200) {
+
+      this.x2 = this.x2 + random(9, 10)
+
+    }
+  }
+  
+  
+  this.moverseX2 = function() {
+
+    this.x2 = this.x2 - random(1, 2);
+
+    if (this.x2 <= width / 2 + 200) {
+
+      this.x2 = this.x2 - random(9, 10)
+
+    }
+  }
 }
 //esta funcion se activa cuando el dispositivo reconoce que se movio un toque en la pantalla
 function touchMoved() {
@@ -371,20 +884,52 @@ function touchMoved() {
 }
 
 function mouseReleased() {
-  
+
   if (estado == 0) {
     estado = 1;
   } else if (estado == 3) {
-    if (mouseX > width/2 - posXbot1 && mouseX < width/2 -  posXbot1 + tamBot1 &&
-    mouseY > height/2 + posYbot1 && mouseY < height/2 + posYbot1 + tamBot2) {
-   
-   estado = 1;
-   score = 0;
-   musica.playMode('restart');
-   musica.play();
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
+
+      estado = 1;
+      numRocas = 10
+      score = 0;
+      musica.playMode('restart');
+      musica.play();
+    }
+
+  }
+  else if (estado == 2) {
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
+
+      estado = 4;
+      musica.playMode('restart');
+      musica.play();
+    }
+
+  }
+  else if (estado == 5) {
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
+
+      estado = 6;
+      musica.playMode('restart');
+      musica.play();
+    }
+
   }
   
-}
+  else if (estado == 7) {
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
+
+      estado = 8;
+      musica.playMode('restart');
+      musica.play();
+    }
+
+  }
 }
 
 function mouseDragged() {
@@ -405,4 +950,5 @@ function mouseWheel(event) {
 
   //uncomment to block page scrolling
   return false;
+
 }
