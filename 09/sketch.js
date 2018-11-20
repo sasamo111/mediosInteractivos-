@@ -8,6 +8,10 @@ var posXbot1 = 100;
 var posYbot1 = 170;
 var tamBot1 = 198;
 var tamBot2 = 40;
+var posXbot1 = 100;
+var posYbot2 = 250;
+var tamBot1 = 198;
+var tamBot2 = 40;
 var estado = 0;
 var fuente;
 var musica;
@@ -44,6 +48,10 @@ function setup() {
   //crea un canvas del tamano de la ventana
 
   createCanvas(windowWidth, windowHeight);
+  
+  //aca se define la posición inicial de la elipse
+  x = width/2; //posicion en x
+  y = height - 100; //posicion en y
 
   tituloX = width + 200
   naveX = width + 200
@@ -85,7 +93,7 @@ function draw() {
   tiempoC = musica.currentTime();
 
   imageMode(CENTER);
-
+  
 
   //estrellas
 
@@ -113,14 +121,15 @@ function draw() {
 
     if (frameCount >= 410) {
 
-      //titulo "Toca para jugar"
+      //titulo "Jugar por niveles "
 
       strokeWeight(1);
       fill(255);
       textSize(30);
       textFont('Audiowide');
       textAlign(CENTER);
-      text("Toca para jugar", width / 2, height / 2 + 200);
+      text("Modo Niveles", width / 2, height / 2 + 200);
+      text("Modo Infinito", width / 2, height / 2 + 270);
 
     }
 
@@ -138,6 +147,7 @@ function draw() {
   // Estado 1: Jugar
   else if (estado == 1) {
     
+    numRocas = 10
 
     rojo = random(0, 255);
     verde = random(0, 255);
@@ -164,18 +174,18 @@ function draw() {
       }
     }
 
-    //Nave para controlar 
+   //Nave para controlar 
 
     noTint();
     imageMode(CENTER);
-    image(nave, mouseX, mouseY, navTamX, navTamY);
+    image(nave, x, y, navTamX, navTamY);
 
     //Efecto de volumen y paneo
 
-    var vol = map(height - mouseY, height, 0, 0, 1);
+    var vol = map(height - y, height, 0, 0, 1);
     musica.setVolume(vol);
 
-    var paneo = map(mouseX, 0, width, -1, 1);
+    var paneo = map(x, 0, width, -1, 1);
     musica.pan(paneo);
 
     textFont('Audiowide');
@@ -196,9 +206,9 @@ function draw() {
       rocas[i].dibujarse();
       rocas[i].moverseY();
 
-      if (score % 150== 0 && score >= 150) {
+      if (score % 100 == 0 && score >= 100) {
 
-        rocas[i].vel = rocas[i].vel + 0.1
+        rocas[i].vel = rocas[i].vel + 0.2
         numRocas = numRocas + 1;
         score = score + 1
         rocas.push(new meto(random(0, width), random(-300, -50), 1));
@@ -321,14 +331,14 @@ function draw() {
 
     noTint();
     imageMode(CENTER);
-    image(nave, mouseX, mouseY, navTamX, navTamY);
+    image(nave, x, y, navTamX, navTamY);
 
     //Efecto de volumen y paneo
 
-    var vol = map(height - mouseX, height, 0, 0, 1);
+     var vol = map(height - y, height, 0, 0, 1);
     musica.setVolume(vol);
 
-    var paneo = map(mouseY, 0, width, -1, 1);
+    var paneo = map(x, 0, width, -1, 1);
     musica.pan(paneo);
 
    
@@ -341,7 +351,7 @@ function draw() {
     textAlign(LEFT);
     text((score), 123, 50);
     textSize(20);
-    text("Objetivo: 500", 35, 83);
+    text("Objetivo: 750", 35, 83);
 
     //dibuja las rocas lunares
 
@@ -393,7 +403,7 @@ function draw() {
       }
     }
     
-    if (score >= 500){
+    if (score >= 750){
     estado = 5
     
    }
@@ -440,6 +450,7 @@ function draw() {
     }
   }
   
+  
   // Estado 6: Nivel 3
   else if (estado == 6) {
 
@@ -473,14 +484,14 @@ function draw() {
 
     noTint();
     imageMode(CENTER);
-    image(nave, mouseX, mouseY, navTamX, navTamY);
+    image(nave, x, y, navTamX, navTamY);
 
     //Efecto de volumen y paneo
 
-    var vol = map(height - mouseX, height, 0, 0, 1);
+    var vol = map(height - y, height, 0, 0, 1);
     musica.setVolume(vol);
 
-    var paneo = map(mouseY, 0, width, -1, 1);
+    var paneo = map(x, 0, width, -1, 1);
     musica.pan(paneo);
 
     textFont('Audiowide');
@@ -492,7 +503,7 @@ function draw() {
     textAlign(LEFT);
     text((score), 123, 50);
     textSize(20);
-    text("Objetivo: 800", 35, 83);
+    text("Objetivo: 1000", 35, 83);
 
     //dibuja las rocas lunares
 
@@ -544,7 +555,7 @@ function draw() {
       }
     }
     
-    if (score >= 800){
+    if (score >= 1000){
     
     estado = 7
       
@@ -625,14 +636,14 @@ function draw() {
 
     noTint();
     imageMode(CENTER);
-    image(nave, mouseX, mouseY, navTamX, navTamY);
+    image(nave, x, y, navTamX, navTamY);
 
     //Efecto de volumen y paneo
 
-    var vol = map(height - mouseY, height, 0, 0, 1);
+     var vol = map(height - y, height, 0, 0, 1);
     musica.setVolume(vol);
 
-    var paneo = map(mouseX, 0, width, -1, 1);
+    var paneo = map(x, 0, width, -1, 1);
     musica.pan(paneo);
 
     textFont('Audiowide');
@@ -697,6 +708,215 @@ function draw() {
     }
   
   }
+  
+  // Estado 9: Modo Infinito
+  else if (estado == 9) {
+    
+
+    rojo = random(0, 255);
+    verde = random(0, 255);
+    azul = random(0, 255);
+
+    //Destellos de luz
+
+    if (tiempoC > 91.2 && tiempoC < 170) {
+      var nivel = analizador.getLevel();
+      for (var i = 0; i < 5; i = i + 3) {
+        var posX = random(0, width);
+        var posY = random(0, height);
+
+        noStroke();
+        fill(rojo, verde, azul);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 150);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 100);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+
+      }
+    }
+
+    //Nave para controlar 
+
+    noTint();
+    imageMode(CENTER);
+    image(nave, x, y, navTamX, navTamY);
+
+    //Efecto de volumen y paneo
+
+    var vol = map(height - y, height, 0, 0, 1);
+    musica.setVolume(vol);
+
+    var paneo = map(x, 0, width, -1, 1);
+    musica.pan(paneo);
+
+    textFont('Audiowide');
+    strokeWeight(1);
+    fill(255);
+    textAlign(CENTER);
+    textSize(30);
+    text("Score:", 65, 50);
+    textAlign(LEFT);
+    text((score), 123, 50);
+   
+
+    //dibuja las rocas lunares
+
+    for (var i = 0; i < rocas.length ; i = i + 1) {
+      rocas[i].dibujarse();
+      rocas[i].moverseY();
+
+      if (score % 150== 0 && score >= 150) {
+
+        rocas[i].vel = rocas[i].vel + 0.1
+        numRocas = numRocas + 1;
+        score = score + 1
+        rocas.push(new meto(random(0, width), random(-300, -50), 1));
+
+      }
+
+      if (rocas[i].y >= height + 50) {
+
+        rocas[i].y = random(-300, -50);
+        rocas[i].x = random(0, width)
+
+        score = score + 1
+      }
+
+      if (dist(rocas[i].x, rocas[i].y, mouseX, mouseY) < 50) {
+        estado = 10;
+      }
+    }
+
+    //dibuja los bonus
+
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+      bonus[i2].dibujarse();
+      bonus[i2].moverseY();
+
+      if (bonus[i2].y2 >= height + 50) {
+
+        bonus[i2].y2 = random(-1000, -900);
+        bonus[i2].x2 = random(0, width)
+      }
+
+      if (dist(bonus[i2].x2, bonus[i2].y2, mouseX, mouseY) < 50) {
+
+        score = score + 30;
+
+        bonus[i2].y2 = random(-1000, -900);
+        bonus[i2].x2 = random(0, width)
+
+      }
+    }
+  }
+  
+  // Estado 11: Multijugador
+  else if (estado == 11) {
+    
+
+    rojo = random(0, 255);
+    verde = random(0, 255);
+    azul = random(0, 255);
+
+    //Destellos de luz
+
+    if (tiempoC > 91.2 && tiempoC < 170) {
+      var nivel = analizador.getLevel();
+      for (var i = 0; i < 5; i = i + 3) {
+        var posX = random(0, width);
+        var posY = random(0, height);
+
+        noStroke();
+        fill(rojo, verde, azul);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 150);
+        ellipse(posX, posY, nivel * 750, nivel * 750);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+        fill(255, 255, 255, 100);
+        ellipse(posX, posY, nivel * 450, nivel * 450);
+
+      }
+    }
+
+    //Nave para controlar 
+
+    noTint();
+    imageMode(CENTER);
+    image(nave, x, y, navTamX, navTamY);
+
+    //Efecto de volumen y paneo
+
+    var vol = map(height - y, height, 0, 0, 1);
+    musica.setVolume(vol);
+
+    var paneo = map(x, 0, width, -1, 1);
+    musica.pan(paneo);
+
+    textFont('Audiowide');
+    strokeWeight(1);
+    fill(255);
+    textAlign(CENTER);
+    textSize(30);
+    text("Score:", 65, 50);
+    textAlign(LEFT);
+    text((score), 123, 50);
+   
+
+    //dibuja las rocas lunares
+
+    for (var i = 0; i < rocas.length ; i = i + 1) {
+      rocas[i].dibujarse();
+      rocas[i].moverseY();
+
+      if (score % 150== 0 && score >= 150) {
+
+        rocas[i].vel = rocas[i].vel + 0.1
+        numRocas = numRocas + 1;
+        score = score + 1
+        rocas.push(new meto(random(0, width), random(-300, -50), 1));
+
+      }
+
+      if (rocas[i].y >= height + 50) {
+
+        rocas[i].y = random(-300, -50);
+        rocas[i].x = random(0, width)
+
+        score = score + 1
+      }
+
+      if (dist(rocas[i].x, rocas[i].y, mouseX, mouseY) < 50) {
+        estado = 10;
+      }
+    }
+
+    //dibuja los bonus
+
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+      bonus[i2].dibujarse();
+      bonus[i2].moverseY();
+
+      if (bonus[i2].y2 >= height + 50) {
+
+        bonus[i2].y2 = random(-1000, -900);
+        bonus[i2].x2 = random(0, width)
+      }
+
+      if (dist(bonus[i2].x2, bonus[i2].y2, mouseX, mouseY) < 50) {
+
+        score = score + 30;
+
+        bonus[i2].y2 = random(-1000, -900);
+        bonus[i2].x2 = random(0, width)
+
+      }
+    }
+  }
+  
 
   //Perdiste
   else if (estado == 3) {
@@ -723,12 +943,48 @@ function draw() {
     text("GAME OVER", width / 2, height / 2 - 200);
     textSize(30);
     text("Reintentar", width / 2, height / 2 + 200);
+    text("Modo Infinito", width / 2, height / 2 + 270);
 
 
-    strokeWeight(3);
-    stroke(255);
-    noFill();
-    rect(width / 2 - posXbot1, height / 2 + posYbot1, tamBot1, tamBot2);
+    for (var i = 0; i < rocas.length; i = i + 1) {
+      rocas[i].y = random(-500, -50);
+      rocas[i].x = random(0, width);
+      rocas[i].vel = random(4, 6);
+    }
+    for (var i2 = 0; i2 < bonus.length; i2 = i2 + 1) {
+
+      bonus[i2].y2 = random(-1000, -900);
+      bonus[i2].x2 = random(0, width)
+    }
+  }
+  
+   //Perdiste
+  else if (estado == 10) {
+
+    numRocas = 10
+    //musica.pause();
+
+    textFont('Audiowide');
+    strokeWeight(1);
+    fill(255);
+    textAlign(CENTER);
+    textSize(30);
+    text("Score:", width / 2 - 25, height / 2 + 50);
+    textAlign(LEFT);
+    text((score), width / 2 + 35, height / 2 + 50);
+
+
+    //titulo "GAME OVER"
+
+    strokeWeight(1);
+    fill(255);
+    textSize(80);
+    textFont('Audiowide');
+    textAlign(CENTER);
+    text("GAME OVER", width / 2, height / 2 - 200);
+    textSize(30);
+    text("Reintentar", width / 2, height / 2 + 200);
+    text("Modo Niveles", width / 2, height / 2 + 270);
 
     for (var i = 0; i < rocas.length; i = i + 1) {
       rocas[i].y = random(-500, -50);
@@ -746,8 +1002,8 @@ function draw() {
 
 function nav(mouseX, mouseY) {
 
-  this.x2 = mouseY
-  this.y2 = mouseY
+  this.x2 = mouseX;
+  this.y2 = mouseY;
 
   this.dibujarse = function() {
 
@@ -886,7 +1142,19 @@ function touchMoved() {
 function mouseReleased() {
 
   if (estado == 0) {
-    estado = 1;
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
+
+      estado = 1;
+
+    }
+    
+     if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot2 && mouseY < height / 2 + posYbot2 + tamBot2) {
+
+      estado = 9;
+
+    }
   } else if (estado == 3) {
     if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
       mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
@@ -896,6 +1164,41 @@ function mouseReleased() {
       score = 0;
       musica.playMode('restart');
       musica.play();
+    }
+    
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot2 && mouseY < height / 2 + posYbot2 + tamBot2) {
+
+      estado = 9;
+      numRocas = 10
+      score = 0;
+      musica.playMode('restart');
+      musica.play();
+
+    }
+
+  }
+  
+  else if (estado == 10) {
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
+
+      estado = 9;
+      numRocas = 10
+      score = 0;
+      musica.playMode('restart');
+      musica.play();
+    }
+    
+     if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot2 && mouseY < height / 2 + posYbot2 + tamBot2) {
+
+      estado = 1;
+      numRocas = 10
+      score = 0;
+      musica.playMode('restart');
+      musica.play();
+
     }
 
   }
@@ -935,14 +1238,30 @@ function mouseReleased() {
 function mouseDragged() {
   //prevent default
 
-  return false;
+  //return false;
+  
+  //revisa si la posición del mouse es cercana a la posicion de la ellipse
+  if (dist(mouseX, mouseY, x, y) < navTamX/2 ) {
+
+    //actualiza la posicion de la elipse con la posición del mouse
+    x = mouseX;
+    y = mouseY;
+  }
+
 
 }
 
 function touchMoved() {
 
   // prevent default
-  return false;
+  //return false;
+  //revisa si la posición del mouse es cercana a la posicion de la ellipse
+  if (dist(mouseX, mouseY, x, y) < navTamX/2 ) {
+
+    //actualiza la posicion de la elipse con la posición del mouse
+    x = mouseX;
+    y = mouseY;
+  }
 }
 
 function mouseWheel(event) {
