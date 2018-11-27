@@ -161,7 +161,7 @@ function draw() {
   // Estado 1: Nivel 1
   else if (estado == 1) {
 
-    numRocas = 10
+    numRocas = 12
 
     rojo = random(0, 255);
     verde = random(0, 255);
@@ -1321,7 +1321,7 @@ function mouseReleased() {
       mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
 
       estado = 1;
-      numRocas = 10
+      numRocas = 12
       score = 0;
       musica.playMode('restart');
       musica.play();
@@ -1331,7 +1331,7 @@ function mouseReleased() {
       mouseY > height / 2 + posYbot2 && mouseY < height / 2 + posYbot2 + tamBot2) {
 
       estado = 9;
-      numRocas = 10
+      numRocas = 12
       score = 0;
       musica.playMode('restart');
       musica.play();
@@ -1342,7 +1342,7 @@ function mouseReleased() {
       mouseY > height / 2 + posYbot3 && mouseY < height / 2 + posYbot3 + tamBot2) {
 
       estado = 0;
-      numRocas = 10
+      numRocas = 12
       score = 0;
       musica.playMode('restart');
       musica.play();
@@ -1354,7 +1354,7 @@ function mouseReleased() {
       mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
 
       estado = 9;
-      numRocas = 10
+      numRocas = 12
       score = 0;
       musica.playMode('restart');
       musica.play();
@@ -1364,7 +1364,7 @@ function mouseReleased() {
       mouseY > height / 2 + posYbot2 && mouseY < height / 2 + posYbot2 + tamBot2) {
 
       estado = 1;
-      numRocas = 10
+      numRocas = 12
       score = 0;
       musica.playMode('restart');
       musica.play();
@@ -1375,7 +1375,7 @@ function mouseReleased() {
       mouseY > height / 2 + posYbot3 && mouseY < height / 2 + posYbot3 + tamBot2) {
 
       estado = 0;
-      numRocas = 10
+      numRocas = 12
       score = 0;
       musica.playMode('restart');
       musica.play();
