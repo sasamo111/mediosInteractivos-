@@ -829,7 +829,7 @@ function draw() {
 
     //Comando para que cada 150 aumente la velocidad de las rocas. 
     
-    if (score % 70 == 0 && score >= 70) {
+    if (score % 50 == 0 && score >= 50) {
 
       for (var i = 0; i < rocas.length; i = i + 1) {
         rocas[i].vel = rocas[i].vel + 0.2;
