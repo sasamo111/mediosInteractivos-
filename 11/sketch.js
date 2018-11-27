@@ -1440,7 +1440,7 @@ function touchMoved() {
 
   for (var t = 0; t < touches.length; t++) {
     // prevent default
-    //return false;
+
     //revisa si la posición del mouse es cercana a la posicion de la ellipse
     if (dist(touches[t].x, touches[t].y, x, y) < navTamX / 2) {
 
@@ -1457,7 +1457,7 @@ function touchMoved() {
       y2 = touches[t].y;
     }
   }
-
+return false;
 }
 
 function mouseWheel(event) {
