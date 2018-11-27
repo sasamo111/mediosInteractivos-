@@ -1415,7 +1415,7 @@ function mouseReleased() {
 function mouseDragged() {
   //prevent default
 
-  return false;
+  //return false;
 
   //revisa si la posición del mouse es cercana a la posicion de la ellipse
   if (dist(mouseX, mouseY, x, y) < navTamX / 2) {
