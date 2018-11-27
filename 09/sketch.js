@@ -62,8 +62,8 @@ function setup() {
 
   rX = width / 2
   rY = height / 2
-  
-  mX = random(4, 6);
+
+  mX = random(5, 7);
   mY = random(8, 10);
 
 
@@ -125,7 +125,7 @@ function draw() {
 
     //titulo "Spaceship"
     noTint();
-    image(titulo, tituloX, height / 2 - 200, 400, 90);
+    image(titulo, tituloX, height / 2 - 220, 465, 105);
 
     tituloX = tituloX - 1.5
     if (tituloX <= width / 2) {
@@ -851,27 +851,40 @@ function draw() {
 
     rY = rY + mY * dir;
     rY = rY + 1 * dir;
-    rX = rX + mX * dirX
+    rX = rX + mX * dirX;
 
     if (dist(rX, rY, x, y) < navTamX / 2) {
       dir = -1;
       dirX = random(-1, 1);
+      
     }
 
     if (dist(rX, rY, x2, y2) < navTamX / 2) {
       dir = 1;
-      dirX = random (-1, 1);
+      dirX = random(-1, 1);
     }
 
     if (rX > width - 25) {
 
-      dirX = -1
+      dirX = -1;
 
     }
 
     if (rX < 0) {
 
-      dirX = 1
+      dirX = 1;
+
+    }
+
+    if (rY > height) {
+
+      estado = 12;
+
+    }
+
+    if (rY < 0) {
+
+      estado = 13;
 
     }
 
@@ -918,6 +931,7 @@ function draw() {
     textSize(30);
     text("Reintentar", width / 2, height / 2 + 200);
     text("Modo Infinito", width / 2, height / 2 + 270);
+    text("Inicio", width / 2, height / 2 + 340);
 
 
     for (var i = 0; i < rocas.length; i = i + 1) {
@@ -959,6 +973,7 @@ function draw() {
     textSize(30);
     text("Reintentar", width / 2, height / 2 + 200);
     text("Modo Niveles", width / 2, height / 2 + 270);
+    text("Inicio", width / 2, height / 2 + 340);
 
     for (var i = 0; i < rocas.length; i = i + 1) {
       rocas[i].y = random(-500, -50);
@@ -970,6 +985,44 @@ function draw() {
       bonus[i2].y2 = random(-1000, -900);
       bonus[i2].x2 = random(0, width)
     }
+  }
+
+  //Perdiste
+  else if (estado == 12) {
+
+    //titulo "jugador 1"
+
+    strokeWeight(1);
+    fill(255);
+    textSize(80);
+    textFont('Audiowide');
+    textAlign(CENTER);
+    text("Ganador:", width / 2, height / 2 - 200);
+    textSize(50);
+    text("Jugador 1", width / 2, height / 2 - 100);
+    textSize(30);
+    text("Volver a jugar", width / 2, height / 2 + 200);
+    text("Inicio", width / 2, height / 2 + 270);
+
+  }
+
+  //Perdiste
+  else if (estado == 13) {
+
+    //titulo "jugador 2"
+
+    strokeWeight(1);
+    fill(255);
+    textSize(80);
+    textFont('Audiowide');
+    textAlign(CENTER);
+    text("Ganador:", width / 2, height / 2 - 200);
+    textSize(50);
+    text("Jugador 2", width / 2, height / 2 - 100);
+    textSize(30);
+    text("Volver a jugar", width / 2, height / 2 + 200);
+    text("Inicio", width / 2, height / 2 + 270);
+
   }
 }
 
@@ -1137,6 +1190,78 @@ function mouseReleased() {
 
     }
 
+  } else if (estado == 12) {
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
+
+      estado = 11;
+      
+      //aca se define la posición inicial de la elipse
+  x = width / 2; //posicion en x
+  y = height - 100; //posicion en y
+
+  x2 = width / 2; //posicion en x
+  y2 = 100; //posicion en y
+
+      rX = width / 2
+      rY = height / 2
+
+
+    }
+
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot2 && mouseY < height / 2 + posYbot2 + tamBot2) {
+
+      estado = 0;
+      
+      //aca se define la posición inicial de la elipse
+  x = width / 2; //posicion en x
+  y = height - 100; //posicion en y
+
+  x2 = width / 2; //posicion en x
+  y2 = 100; //posicion en y
+      
+      rX = width / 2;
+      rY = height / 2;
+
+    }
+
+  } else if (estado == 13) {
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
+
+      estado = 11;
+      
+      //aca se define la posición inicial de la elipse
+  x = width / 2; //posicion en x
+  y = height - 100; //posicion en y
+
+  x2 = width / 2; //posicion en x
+  y2 = 100; //posicion en y
+      
+      rX = width / 2;
+      rY = height / 2;
+
+
+    }
+
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot2 && mouseY < height / 2 + posYbot2 + tamBot2) {
+
+      estado = 0;
+      
+      //aca se define la posición inicial de la elipse
+  x = width / 2; //posicion en x
+  y = height - 100; //posicion en y
+
+  x2 = width / 2; //posicion en x
+  y2 = 100; //posicion en y
+      
+      rX = width / 2;
+      rY = height / 2;
+
+    }
+
   } else if (estado == 3) {
     if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
       mouseY > height / 2 + posYbot1 && mouseY < height / 2 + posYbot1 + tamBot2) {
@@ -1152,6 +1277,17 @@ function mouseReleased() {
       mouseY > height / 2 + posYbot2 && mouseY < height / 2 + posYbot2 + tamBot2) {
 
       estado = 9;
+      numRocas = 10
+      score = 0;
+      musica.playMode('restart');
+      musica.play();
+
+    }
+    
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot3 && mouseY < height / 2 + posYbot3 + tamBot2) {
+
+      estado = 0;
       numRocas = 10
       score = 0;
       musica.playMode('restart');
@@ -1174,6 +1310,17 @@ function mouseReleased() {
       mouseY > height / 2 + posYbot2 && mouseY < height / 2 + posYbot2 + tamBot2) {
 
       estado = 1;
+      numRocas = 10
+      score = 0;
+      musica.playMode('restart');
+      musica.play();
+
+    }
+    
+    if (mouseX > width / 2 - posXbot1 && mouseX < width / 2 - posXbot1 + tamBot1 &&
+      mouseY > height / 2 + posYbot3 && mouseY < height / 2 + posYbot3 + tamBot2) {
+
+      estado = 0;
       numRocas = 10
       score = 0;
       musica.playMode('restart');
