@@ -2,7 +2,7 @@
 // Estado 1 = nivel 1
 // Estado 2 = Perdio
 // Estado 3 = Nivel 2
-var numRocas = 10
+var numRocas = 12
 var colores;
 var posXbot1 = 100;
 var posYbot1 = 170;
